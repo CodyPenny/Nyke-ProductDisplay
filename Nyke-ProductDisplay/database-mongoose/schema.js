@@ -1,18 +1,15 @@
 const mongoose = require('mongoose')
 
-
-
-let productSchema = mongoose.Schema({
+let productSchema = new mongoose.Schema({
   name: String,
   gender: String,
-  discountPrice: Number,
   type: String,
   price: Number,
-  nikeID: Number,
+  nikeID: String,
   colorStyles: [String],
   productPictures: [String],
   productDetails: {
-    weight: Number,
+    weight: String, // was Number changed to String
     last: String,
     offset: String,
     style: String,
@@ -41,9 +38,8 @@ let productSchema = mongoose.Schema({
     '16': Boolean,
     '17': Boolean,
     '18': Boolean
-  }
-})
+  },
+  count: Number
+});
 
-
-
-module.exports = productSchema
+module.exports = productSchema;

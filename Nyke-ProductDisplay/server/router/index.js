@@ -6,10 +6,13 @@ router.use(function timeLog(req, res, next) {
 	next();
 });
 
+router.route("/shoe")
+	.post(controller.createItem)
+	
+router.route("/shoe/:nikeID")
+	.get(controller.getOneShoe)
+	.delete(controller.deleteOne)
 
-
-//get shoe by ID
-router.route("/shoe/:nikeID").get(controller.getOneShoe)
 
 //get shoeset by name
 router.route("/shoes/:name").get(controller.getShoes);

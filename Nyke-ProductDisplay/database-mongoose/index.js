@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const productSchema = require('./schema')
 
-mongoose.Promise = global.Promise;
+// mongoose.Promise = global.Promise;
 //need to seed DB
 mongoose.connect('mongodb://localhost/nykeproducts', {
   useNewUrlParser: true,
@@ -10,10 +10,13 @@ mongoose.connect('mongodb://localhost/nykeproducts', {
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', () => {
-  console.log('DATABASE ON'.red)
-});
+db.on('connected', ()=> {
+  console.log('connected on mongoose');
+})
 
 var Product = mongoose.model('Product', productSchema);
 
-module.exports = Product
+module.exports = {
+  Product,
+  db
+}

@@ -30,5 +30,30 @@ module.exports = {
 				console.log("QUERY SHOESET".red, " UnSuccessFull".red);
 				res.status(400).send(e);
 			});
-	}
+	},
+
+	createItem: (req, res) => {
+		let obj = req.body;
+		db.postOne(obj)
+			.then(data => {
+				res.status(200).send(data);
+			})
+			.catch(err => {
+				res.status(400).send(err);
+			});
+	},
+
+	deleteOne: (req, res) => {
+		let {_id} = req.params;
+		db.deleteOne(_id)
+		.then(data => {
+			res.status(200).send(data);
+		})
+		.catch(err => {
+			res.status(400).send(err);
+		});
+	},
+
+
+
 };

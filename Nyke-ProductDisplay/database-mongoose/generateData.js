@@ -35,7 +35,6 @@ let availSizesObj =  {
 }
 
 
-
 let generateRandomDiscountPrice = (min, max, price) => {
   // min = Math.ceil(min);
   // max = Math.floor(max);
@@ -48,8 +47,6 @@ let generateRandomPriceBasedOnLengthOfName = (shoename, base) => {
 
 }
 
-
-
 let generateRandomGender = (unisexOption) => {
   let sex = ['male', 'female', 'unisex']
   if(unisexOption){
@@ -59,8 +56,6 @@ let generateRandomGender = (unisexOption) => {
     return sex[Math.floor(Math.random() * sex.length)]
   }
 }
-
-//console.log(generateRandomGender(true))
 
 let generateRandomSizeAvail = (sex) => {
   let randoSize = {}
@@ -973,22 +968,3 @@ writeData()
 
 
 
-// const createShoesArray = () => {
-//   let shoesArr = [];
-//   for(let i = 0; i < 10; i++){
-//     shoesArr.push(createRandomShoe())
-//   }
-//   return shoesArr
-// }
-
-// const seedMockData = function() {
-//   // Complete me please
-//   let products = createShoesArray()
-
-//   db.insertMany(products)
-//     .then((e) => console.log('Products Were Inserted'))
-//     .catch((err) => console.log('We fucked Up Inserting', err))
-//  // console.log(products)
-// };
-
-// seedMockData()
