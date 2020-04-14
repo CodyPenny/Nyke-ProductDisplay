@@ -1,22 +1,54 @@
-const mongoose = require('mongoose');
-const productSchema = require('./schema')
+// commenting out mongoose connection
+// const mongoose = require('mongoose');
+// const productSchema = require('./schema')
 
 // mongoose.Promise = global.Promise;
-//need to seed DB
-mongoose.connect('mongodb://localhost/nykeproducts', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+// //need to seed DB
+// mongoose.connect('mongodb://localhost/nyke', {
+//   useUnifiedTopology: true,
+//   useNewUrlParser: true,
+// });
 
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.on('connected', ()=> {
-  console.log('connected on mongoose');
-})
+// const db = mongoose.connection;
+// db.on('error', console.error.bind(console, 'connection error:'));
+// db.on('connected', ()=> {
+//   console.log('connected on mongoose');
+// })
 
-var Product = mongoose.model('Product', productSchema);
+// var Product = mongoose.model('nykeshoes', productSchema);
 
-module.exports = {
-  Product,
-  db
+//mongo
+
+const { MongoClient } = require('mongodb');
+
+module.exports = async (method, target) => {
+
+  const URI = "mongodb://localhost/nyke";
+
+  let options = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  };
+  try {
+    let connection = await MongoClient.connect(URI, options);
+    let db = connection.db('nyke');
+    var mydb = db.collection('nykeshoes'); // Collection object
+   
+    if (method === 'get') {
+      // console.log('searching', target)
+      return await mydb.findOne({count: Number(target)})
+    }
+  
+  } catch (err) {
+    console.log('error connecting to mongo', err)
+  }
+  // finally {
+  //   console.log('closing')
+  //   connection.close();
+  // }
+
 }
+
+
+
+

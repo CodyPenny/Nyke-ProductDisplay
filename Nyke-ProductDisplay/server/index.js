@@ -3,8 +3,9 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const router = require("./router");
 const app = express();
-const PORT = 3002;
-const db = require("../database-mongoose/index");
+const morgan = require('morgan');
+
+// const db = require("../database-mongoose/index");
 
 
 var colors = require("colors");
@@ -23,12 +24,16 @@ colors.setTheme({
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(morgan('dev'));
 
 // UNCOMMENT FOR REACT
 app.use(express.static(path.join(__dirname + "/../client-react/dist")));
 
 app.use("/api", router);
+// app.use("api", (req,res) => {
+// 	res.send('test')
+// })
 
-app.listen(PORT, () => {
-	console.log(`listening on port`.green, `${PORT}`.cyan);
-});
+module.exports = app;
+
+

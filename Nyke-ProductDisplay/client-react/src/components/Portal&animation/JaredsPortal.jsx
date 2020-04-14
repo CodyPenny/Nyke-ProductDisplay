@@ -4,10 +4,11 @@ import ReactDOM from "react-dom";
 const portalRoot = document.getElementById('jaredsPortal')
 
 class JaredsPortal extends React.Component{
-  constructor(){
-    super()
-    this.el = document.
+  constructor(props){
+    super(props)
+    // this.el = document.
   }
+
   componentDidMount(){
     portalRoot.appendChild(this.el)
   }

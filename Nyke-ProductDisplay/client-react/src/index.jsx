@@ -7,24 +7,7 @@ import SideBar from "./components/sidebar/SideBar.jsx";
 import NykeMain from "./components/NykeMain/NykeMain.jsx";
 
 import Fade from "./components/Portal&animation/Fade.jsx";
-
 import shoeExample from "./mockData.js";
-
-
-/*
-Have to detect changes in the address bar
-
-used history.pushState to change the URL so it doesn't refresh the browser
-
-looks like you can detect an address change using something like this:
-
-window.addEventListener("hashchange", myFunction());
-        function myFunction() {
-            alert(`${location.href}`);
-        }
-*/
-
-
 
 
 class App extends React.Component {
@@ -36,7 +19,7 @@ class App extends React.Component {
 			similiarShoes: [],
 			currentOrder: {},
 			submitOrder: false,
-			validOrder: null,
+			validOrder: null
 		};
 
 		this.updateCurrentOrder = this.updateCurrentOrder.bind(this);
@@ -47,12 +30,7 @@ class App extends React.Component {
 		this.setColorWayShoe = this.setColorWayShoe.bind(this)
 
 	}
-	// const [state, setState] = useState({view: 'Feed'})
-	//const [showPurchaseModal, setShowPurchaseModal] = useState(false)
 
-	//testurl
-	//  /api/shoes/Nike React HyperSet Rise 4
-	//  /api/shoes/Nike Odyssey React JoyRide CC 2
 	componentDidMount() {
 		this.getShoeSet();
 
@@ -63,54 +41,46 @@ class App extends React.Component {
 			//this.getShoeSet(pathArray[pathArray.length - 1])
 		}
 
-
 		window.addEventListener("hashchange", ()=>{
 			console.log('THE HASH IS CHANGING', window.location.hash)
 			let answer  = window.location.hash.split('#')
 			this.getShoeSet(answer[1]);
 		});
-
-
 	}
 
-
-
-
 	getShoeSet(id) {
-
 		if(id === undefined){
 			id = 160
 		}
 
-
 		Axios.get(`/api/shoe/${id}`)
 			.then(response => {
-				console.log("recieved", response.data.name)
-				let shoe = response.data
-				return shoe
+				// console.log("received", response.data);
+				let shoe = response.data;
+				this.setState({
+					currentShoe: shoe
+				})
+				// return shoe
 			})
-
-			.then(shoe => {
-				Axios.get(`/api/shoes/${shoe.name}`)
-					.then(shoeset => {
-						console.log('recieved an object', shoeset.data)
-						this.setState({
-							currentShoe: shoe,
-							shoeSet: shoeset.data
-						});
-					})
-			})
+			// eliminate sequential search by name in DB
+			// .then(shoe => {
+			// 	Axios.get(`/api/shoes/${shoe.name}`)
+			// 		.then(shoeset => {
+			// 			console.log('recieved an object', shoeset.data)
+			// 			this.setState({
+			// 				currentShoe: shoe,
+			// 				shoeSet: shoeset.data
+			// 			});
+			// 		})
+			// })
 
 			.catch((e) => {
-				window.alert("Fetch Request For Nike Main Component Failed, SoMeThInGwEnTtErRiBlYwRoNg")
-				this.setState({
-					currentShoe: shoeExample,
-				})
+				window.alert("Fetch Request For Nike Main Component Failed, SoMeThInGwEnTtErRiBlYwRoNg");
+				// this.setState({
+				// 	currentShoe: shoeExample,
+				// })
 			});
 	}
-
-
-
 
 	setColorWayShoe(shoe){
 		this.setState({
@@ -120,9 +90,6 @@ class App extends React.Component {
 		//going to set the url with this function
 		window.location.hash = shoe.nikeID;
 	}
-
-
-
 
 	purchaseShoe() {
 		if(this.state.validOrder === null){
@@ -139,6 +106,7 @@ class App extends React.Component {
 			}, 3000);
 		});
 	}
+
 	closePurchaseShoe() {
 		this.setState({
 			currentOrder: {},
@@ -157,9 +125,6 @@ class App extends React.Component {
 		 });
 		//console.log(this.state.currentOrder);
 	}
-
-
-
 
 	render() {
 		return (

@@ -21,8 +21,9 @@ const getExecutionTime = () => {
   console.info('Execution time (hr): %ds %dms', hrend[0], hrend[1] / 1000000);
 }
 
-let counter = 100110;
-var iteration = 1000000;
+let counter = 9000110;
+var iteration = 999891;
+var iterator = [1, 2, 3,4,5]
 
 function createItem () {
     let sex = helpers.randomGender();
@@ -61,14 +62,26 @@ async function seedDb (num) {
             }
         }
         return new Promise(resolve => {
+            console.log('done writing')
             resolve();
         })
     } 
 
+
+// async function promisifySeed () {
+//     var promises = [];
+//     for (var value of iterator) {
+//         promises.push(seedDb(value));
+//     }
+//     Promise.all(promises)
+//     .then(() => getExecutionTime())
+//     .catch(err => console.log('error', err))
+// }
     
-    seedDb();
+//     promisifySeed();
     
-    
+seedDb(1);
+
 
 
 

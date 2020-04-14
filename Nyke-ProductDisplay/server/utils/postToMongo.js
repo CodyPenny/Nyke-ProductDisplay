@@ -7,6 +7,8 @@ const fs = require('fs');
 const JSONStream = require('JSONStream');
 const es = require('event-stream');
 const streamToMongoDB = require('stream-to-mongo-db').streamToMongoDB;
+
+// change database name 
 const outputDBConfig = { dbURL: 'mongodb://localhost:27017/nyke', collection: 'nykeshoes' };
 const writableStream = streamToMongoDB(outputDBConfig);
 
@@ -31,14 +33,39 @@ MongoClient.connect(outputDBConfig.dbURL, { useUnifiedTopology: true, useNewUrlP
         if(err) {
             console.log('err', err)
         }
-        console.log('reading...');
-            const readingStream = fs.createReadStream(__dirname + '/tenmillion.json')
-                .on('open', () => {
-                    readingStream.pipe(JSONStream.parse('*'))
-                    .pipe(writableStream);
-                    console.log('complete seeding to mongodb')
-                    getExecutionTime();
-                })
+        // console.log('reading...');
+        // var iterator = [1,2,3,4,5];
+        // var promises = [];
+        // for (const value of iterator) {
+        // promises.push(mongoWriter(value))    
+        // }
+        // Promise.all(promises)
+        // .then(() => {
+        //     console.log('caught them all');
+        //     getExecutionTime();
+        // })
+        // .catch(err => console.log('err', err))
+        mongoWriter(1)
+        .then(() => {
+            getExecutionTime();
+            console.log('final')
         })
+     })
     
 })
+
+async function mongoWriter (value) {
+    const readingStream = fs.createReadStream(__dirname + `/tenmillion${value}.json`)
+    .on('open', () => {
+        readingStream.pipe(JSONStream.parse('*'))
+        .pipe(writableStream);
+        
+    })
+    // .on('finish', () => {
+    //     console.log('finish', getExecutionTime())
+    // })
+    return new Promise (resolve => {
+        console.log(`complete seeding ${value}`)
+        getExecutionTime();
+    })
+}
