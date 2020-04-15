@@ -28,7 +28,5 @@ build/
 newrelic.js
 
 # reduce size
-script.js
+
 database-postgres/
-test/
-jest.config.js
