@@ -22,8 +22,12 @@
 const { MongoClient } = require('mongodb');
 
 module.exports = async (method, target) => {
+  
+  //config for ec2
 
-  const URI = "mongodb://localhost/nyke";
+  const mongopath ="ip-172-31-3-141.us-west-1.compute.internal:27017";
+
+  const URI = `mongodb://${mongopath}/nyke`;
 
   let options = {
     useNewUrlParser: true,
@@ -32,11 +36,17 @@ module.exports = async (method, target) => {
   try {
     let connection = await MongoClient.connect(URI, options);
     let db = connection.db('nyke');
-    var mydb = db.collection('nykeshoes'); // Collection object
+    var mydb = db.collection('nykeproducts'); // Collection object
    
     if (method === 'get') {
       // console.log('searching', target)
-      return await mydb.findOne({count: Number(target)})
+      return await mydb.findOne({nikeID: Number(target)})
+    }
+    if (method === 'post') {
+      return await mydb.create({target})
+    }
+    if (method === 'delete') {
+      return await mydb.deleteOne({nikeID: Number(target)})
     }
   
   } catch (err) {

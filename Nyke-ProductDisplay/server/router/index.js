@@ -14,8 +14,8 @@ router.route("/shoe/:nikeID")
 	.get(controller.getOneShoe)
 	.delete(controller.deleteOne)
 
-router.route('/test/:count')
-	.get(controller.getsku)
+// router.route('/test/:count')
+// 	.get(controller.getsku)
 
 
 //Nick's route that fires after getting id

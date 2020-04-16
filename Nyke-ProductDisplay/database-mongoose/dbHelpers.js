@@ -33,8 +33,8 @@ module.exports = {
   getAll: ()=> shoes.then(y => y.find({})),
   // getAllShoeSet: (name)=> shoes.find({name: `${name}`}),
   getOne: (nikeID) => db('get', nikeID),
-  postOne: (obj)=> shoes.then(y => y.create({obj})),
-  deleteOne: (_id) => shoes.then( y=> y.destroy(_id)),
+  postOne: (obj)=> db('post', obj),
+  deleteOne: (_id) => db('delete', _id),
   updateShoe: (newObj, id) => {},
   returnsku: (count) => shoes.then(y => y.findOne({count: count}))
 }

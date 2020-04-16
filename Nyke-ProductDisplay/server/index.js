@@ -7,7 +7,6 @@ const morgan = require('morgan');
 
 // const db = require("../database-mongoose/index");
 
-
 var colors = require("colors");
 colors.setTheme({
 	silly: "rainbow",
@@ -28,6 +27,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // UNCOMMENT FOR REACT
 app.use(express.static(path.join(__dirname + "/../client-react/dist")));
+
+if(process.env.NODE_ENV === 'production') {
+	app.get('/', function (req, res) {
+		 res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+	});
+  }
+
 
 app.use("/api", router);
 // app.use("api", (req,res) => {
